@@ -8,7 +8,6 @@ use App\Service\Message\MessageProviderService;
 use App\Service\Messenger\MessengerModifierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/customer", name="customer_")
@@ -48,6 +47,6 @@ class CustomerController extends AbstractController
             return $this->json($e->getMessage())->setStatusCode(Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json("Message was sent successfully")->setStatusCode(Response::HTTP_OK);
+        return $this->json('Message was sent successfully')->setStatusCode(Response::HTTP_OK);
     }
 }

@@ -13,6 +13,6 @@ class SmsSender implements SenderInterface
 
     public function send(Message $message): void
     {
-        print "SMS";
+        print 'SMS';
     }
 }

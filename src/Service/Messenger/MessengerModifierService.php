@@ -26,16 +26,14 @@ class MessengerModifierService
      */
     public function send(Message $message): void
     {
-        foreach($this->messageSenders as $messageSender)
-        {
-            if($messageSender->supports($message))
-            {
+        foreach ($this->messageSenders as $messageSender) {
+            if ($messageSender->supports($message)) {
                 $messageSender->send($message);
 
                 return;
             }
         }
 
-        throw new \Exception("Was not able to send a message.");
+        throw new \Exception('Was not able to send a message.');
     }
 }

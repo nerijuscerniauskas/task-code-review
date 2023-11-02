@@ -13,6 +13,6 @@ class EmailSender implements SenderInterface
 
     public function send(Message $message): void
     {
-        print "EMAIL";
+        print 'EMAIL';
     }
 }
