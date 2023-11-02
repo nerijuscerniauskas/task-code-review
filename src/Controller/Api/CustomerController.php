@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use App\Model\Message;
+use App\Requests\CustomerController\NotificationRequest;
 use App\Service\EmailSender;
 use App\Service\Messenger;
 use App\Service\SMSSender;
@@ -21,13 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AbstractController
 {
     /**
-     * @Route("/{code}/notifications", name="notifications", methods={"GET"})
+     * @Route("/{code}/notifications", name="notifications", methods={"POST"})
      */
-    public function notifyCustomer(Request $request, string $code): Response
+    public function notifyCustomer(NotificationRequest $request, string $code): Response
     {
+        $request->validate();
+
+
         return new Response("OK");
 
-        $requestData = json_decode($request->getContent(), true);
 
         $repository = new CustomerRepository();
         /** @var Customer $customer */

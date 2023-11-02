@@ -20,7 +20,7 @@ class CustomerRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Customer[] Returns an array of Customer objects
+    //  * @return CustomerNotification[] Returns an array of CustomerNotification objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CustomerRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Customer
+    public function findOneBySomeField($value): ?CustomerNotification
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
