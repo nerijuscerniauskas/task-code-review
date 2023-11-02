@@ -17,7 +17,7 @@ services:
     expose:
       - 9000
     environment:
-      - DATABASE_URL=mysql://root:password@mysql/imaginator
+      - DATABASE_URL=mysql://root:root@mysql/code-review
   mysql:
     image: mysql:8.0
     ports:
