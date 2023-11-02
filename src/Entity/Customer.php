@@ -1,9 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Constant\NotificationType;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -24,6 +26,8 @@ class Customer
 
     /**
      * @ORM\Column(type="string", length=32)
+     *
+     * @Assert\Choice(choices=NotificationType::TYPES, message="Invalid notification type")
      */
     private string $notificationType;
 
@@ -51,6 +55,10 @@ class Customer
 
     public function setNotificationType(string $notificationType): self
     {
+        if (!in_array($notificationType, NotificationType::TYPES)) {
+            throw new \InvalidArgumentException("Invalid notification type");
+        }
+
         $this->notificationType = $notificationType;
 
         return $this;

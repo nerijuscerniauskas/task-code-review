@@ -2,13 +2,12 @@
 
 namespace App\Model;
 
+use App\Constant\NotificationType;
+
 class Message
 {
-    public const TYPE_SMS = 'sms';
-    public const TYPE_EMAIL = 'email';
-
     private string $body;
-    private string $type = self::TYPE_EMAIL;
+    private string $type = NotificationType::TYPE_EMAIL;
 
     public function getType(): string
     {

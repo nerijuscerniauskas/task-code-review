@@ -8,6 +8,7 @@ use App\Service\Message\MessageProviderService;
 use App\Service\Messenger\MessengerModifierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/customer", name="customer_")
