@@ -19,6 +19,8 @@ class MessageProviderService
      * @param array $data = [
      *      'body' => '',
      * ]
+     *
+     * @throws \InvalidArgumentException
      */
     public function getModel(array $data, Customer $customer): Message
     {
