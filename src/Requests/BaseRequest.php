@@ -46,6 +46,17 @@ abstract class BaseRequest
         return Request::createFromGlobals();
     }
 
+    public function getRequestAsArray(): array
+    {
+        $request = $this->getRequest();
+
+        if ($request->getContent()) {
+            return json_decode($request->getContent(), true);
+        }
+
+        return [];
+    }
+
     protected function populate(): void
     {
         try {

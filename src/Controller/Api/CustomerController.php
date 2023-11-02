@@ -2,17 +2,11 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Customer;
-use App\Repository\CustomerRepository;
-use App\Model\Message;
 use App\Requests\CustomerController\NotificationRequest;
-use App\Service\EmailSender;
-use App\Service\Messenger;
-use App\Service\SMSSender;
-use App\Service\Validator;
-use App\Service\WeatherService;
+use App\Service\Customer\CustomerProviderService;
+use App\Service\Message\MessageProviderService;
+use App\Service\Messenger\MessengerModifierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,28 +15,39 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CustomerController extends AbstractController
 {
+    private CustomerProviderService $customerProviderService;
+    private MessageProviderService $messageProviderService;
+    private MessengerModifierService $messengerModifierService;
+
+    public function __construct(
+        CustomerProviderService  $customerProviderService,
+        MessageProviderService   $messageProviderService,
+        MessengerModifierService $messengerModifierService
+    )
+    {
+        $this->customerProviderService = $customerProviderService;
+        $this->messageProviderService = $messageProviderService;
+        $this->messengerModifierService = $messengerModifierService;
+    }
+
     /**
      * @Route("/{code}/notifications", name="notifications", methods={"POST"})
+     *
+     * @throws \Exception
      */
     public function notifyCustomer(NotificationRequest $request, string $code): Response
     {
         $request->validate();
+        $data = $request->getRequestAsArray();
 
+        try {
+            $customer = $this->customerProviderService->getOneCustomerByCode($code);
+            $message = $this->messageProviderService->getModel($data, $customer);
+            $this->messengerModifierService->send($message);
+        } catch (\Exception $e) {
+            return $this->json($e->getMessage())->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
 
-        return new Response("OK");
-
-
-        $repository = new CustomerRepository();
-        /** @var Customer $customer */
-        $customer = $repository->find($code);
-
-        $message = new Message();
-        $message->setBody($customer->getNotificationType());
-        $message->setType($requestData->type);
-
-        $messenger = new Messenger([new EmailSender(), new SMSSender()]);
-        $messenger->send($message);
-
-        return new Response("OK");
+        return $this->json("Message was sent successfully")->setStatusCode(Response::HTTP_OK);
     }
 }
