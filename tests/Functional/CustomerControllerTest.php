@@ -17,7 +17,7 @@ class CustomerControllerTest extends WebTestCase
         $client->request('POST', 'api/customer/test_code/notifications', [], [], [
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
-            'body' => 'hello',
+            'body' => 'notification text',
         ]));
 
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
@@ -49,7 +49,7 @@ class CustomerControllerTest extends WebTestCase
         $client->request('POST', 'api/customer/notifications', [], [], [
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
-            'body' => 'hello',
+            'body' => 'notification text',
         ]));
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
@@ -65,7 +65,7 @@ class CustomerControllerTest extends WebTestCase
         $client->request('POST', 'api/customer/no_customer123/notifications', [], [], [
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
-            'body' => 'hello',
+            'body' => 'notification text',
         ]));
 
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());

@@ -27,6 +27,5 @@ COPY . /var/www
 
 RUN composer install --ignore-platform-reqs --prefer-dist --no-interaction --no-scripts
 
-
 EXPOSE 9000
 CMD ["php-fpm"]

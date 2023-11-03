@@ -10,8 +10,7 @@
         body: "notification text"
     }
 
-# Run application
-## IMPORTANT: Docker was introduced in this repository so everyone could launch the application.
+# How to run application
 
 ### WEIRD PORTS: To avoid potential conflicts with existing ports
 * nginx web server - <b>8001<b>
@@ -28,18 +27,20 @@
 4. After all the process is done loading write: `docker-compose ps -q symfony`
 5. Copy returned value. E.g. of mine: `a2f527561203d53623d3******************************************************`
 6. Now you can access the symfony container: `docker exec -it <value_from_4_step> bash`
-7. Run following: 
+7. Run following:
+   * `cp .env.example .env`
    * `composer install`
    * `php bin/console doctrine:migrations:migrate`
 
-### Test api endpoints manually:
+### Endpoint testing:
 * params:
-  * code - `<write whatever you want>`
+  * code - `test_code`
   * Request body -  `{ body: "notification text" }`
-* Preferably use POSTMAN application with 
-* OpenAPI is not supported
-* Using curl on terminal:
-  * `curl -XPOST -H "Content-type: application/json" -d '{ body: "notification text" }' 'localhost:8001/api/customer/1/notifications'`
+<br></br>  
+* POSTMAN application 
+* curl:
+  `curl -XPOST -H "Content-type: application/json" -d '{ body: "notification text" }' 'localhost:8001/api/customer/test_code/notifications'`
+* Functional tests: `php ./vendor/bin/phpunit tests/Functional` 
 
 ### Run Unit tests:
-    
+* `php ./vendor/bin/phpunit tests/Unit` 

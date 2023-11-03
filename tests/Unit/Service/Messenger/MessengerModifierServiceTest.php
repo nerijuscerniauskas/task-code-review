@@ -11,24 +11,20 @@ use PHPUnit\Framework\TestCase;
 
 class MessengerModifierServiceTest extends TestCase
 {
-    /**
-     * @var list<MockObject>
-     */
-    private array $messageSenders;
     private MessengerModifierService $messengerModifierService;
-    private SmsSender $smsSender;
-    private EmailSender $emailSender;
+    private MockObject $smsSender;
+    private MockObject $emailSender;
 
     public function setUp(): void
     {
         $this->smsSender = $this->createMock(SmsSender::class);
         $this->emailSender = $this->createMock(EmailSender::class);
-        $this->messageSenders = [
+        $messageSenders = [
             $this->smsSender,
             $this->emailSender,
         ];
 
-        $this->messengerModifierService = new MessengerModifierService($this->messageSenders);
+        $this->messengerModifierService = new MessengerModifierService($messageSenders);
     }
 
     /**
