@@ -4,16 +4,20 @@ namespace App\Requests;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use function PHPUnit\Framework\throwException;
 
 abstract class BaseRequest
 {
     protected ValidatorInterface $validator;
+    private Request $request;
 
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator, RequestStack $requestStack)
     {
+        $this->request = $requestStack->getCurrentRequest();
         $this->validator = $validator;
         $this->populate();
     }
@@ -36,14 +40,12 @@ abstract class BaseRequest
         if (count($messages['errors']) > 0) {
             $response = new JsonResponse($messages, Response::HTTP_BAD_REQUEST);
             $response->send();
-
-            exit;
         }
     }
 
     public function getRequest(): Request
     {
-        return Request::createFromGlobals();
+        return  $this->request;
     }
 
     public function getRequestAsArray(): array
@@ -79,8 +81,6 @@ abstract class BaseRequest
 
             $response = new JsonResponse($messages, Response::HTTP_BAD_REQUEST);
             $response->send();
-
-            exit;
         }
     }
 
