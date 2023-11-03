@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use function PHPUnit\Framework\throwException;
 
 abstract class BaseRequest
 {
@@ -45,7 +44,7 @@ abstract class BaseRequest
 
     public function getRequest(): Request
     {
-        return  $this->request;
+        return $this->request;
     }
 
     public function getRequestAsArray(): array
@@ -83,5 +82,4 @@ abstract class BaseRequest
             $response->send();
         }
     }
-
 }
